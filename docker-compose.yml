@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: content_moderation_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - DEBUG=false
+      - MODEL_NAME=oleksiizirka/xlm-roberta-toxicity-classifier
+      - CORS_ORIGINS=["http://localhost:5173", "http://localhost:3000", "http://localhost:80"]
+    volumes:
+      - ./backend/moderation.db:/app/moderation.db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: content_moderation_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
