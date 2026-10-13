@@ -71,7 +71,8 @@ class Settings(BaseSettings):
     }
 
     # Database
-    DATABASE_URL: str = "sqlite:///./moderation.db"
+    # DATABASE_URL: str = "sqlite:///./moderation.db"
+    DATABASE_URL: str = "sqlite:////tmp/moderation.db"
 
     # Resources
     BAD_WORDS_FILE: str = str(RESOURCES_DIR / "bad_words.txt")
